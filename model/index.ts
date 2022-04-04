@@ -17,6 +17,11 @@ export async function dbinit() {
   try {
     await sequelize.authenticate();
     console.log("Connection has been established successfully.");
+    // 🔥 Model 마이그레이션
+    (async () => {
+      await sequelize.sync({ force: true });
+      // Code here
+    })();
   } catch (error) {
     console.error("Unable to connect to the database:", error);
   }
@@ -153,9 +158,3 @@ Notification.belongsTo(User, {
 });
 
 Place.belongsTo(Area);
-
-// 🔥 Model 마이그레이션
-(async () => {
-  await sequelize.sync({ force: true });
-  // Code here
-})();
