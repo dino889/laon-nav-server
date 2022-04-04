@@ -9,6 +9,10 @@
   - log 파일 경로 `public/logs/` 로 변경(웹에서 모니터링 가능)
 - nodemon (dev only)
 
+```bash
+docker run -d --name nav-db --env --env --env MARIADB_ROOT_PASSWORD=1234 -p 3306:3306 -v /Users/Shared/data/mariadb:/var/lib/mysql mariadb
+```
+
 ## CLI
 
 ### 개발시
