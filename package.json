@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "concurrently \" npx tsc --watch \" \" npx nodemon ./bin/www \" ",
-    "start": "concurrently \" npx tsc --watch \" \"npx pm2 start ./bin/www --watch -o ./public/logs/out.log -e ./public/logs/err.log\" ",
+    "build":"npx tsc",
+    "start": "npx pm2 start ./bin/www -o ./public/logs/out.log -e ./public/logs/err.log",
     "stop": "npx pm2 delete all"
   },
   "dependencies": {
