@@ -13,6 +13,7 @@ export const sequelize = new SQ.Sequelize(process.env.DB_NAME!, process.env.DB_U
     idle: 1000,
   },
   port: Number(process.env.DB_PORT),
+  logging: false,
 });
 
 // 🚀 DB 연결
