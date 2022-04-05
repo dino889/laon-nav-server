@@ -1,15 +1,18 @@
 import { DESTRUCTION } from "dns";
 import * as SQ from "sequelize";
+import dotenv from "dotenv";
+dotenv.config();
 
 // 👋 DB 정의
 export const sequelize = new SQ.Sequelize("navdb", "root", "1234", {
-  host: "localhost",
+  host: process.env.DB_HOST,
   dialect: "mysql",
   pool: {
     max: 5,
     min: 0,
     idle: 1000,
   },
+  port: Number(process.env.DB_PORT),
 });
 
 // 🚀 DB 연결
@@ -19,7 +22,7 @@ export async function dbinit() {
     console.log("Connection has been established successfully.");
     // 🔥 Model 마이그레이션
     (async () => {
-      await sequelize.sync({ force: true });
+      await sequelize.sync(); //{ alter: true }
       // Code here
     })();
   } catch (error) {
@@ -53,7 +56,7 @@ export const User = sequelize.define("user", {
   nickname: {
     type: SQ.DataTypes.STRING(100),
     allowNull: false,
-    unique: true,
+    unique: false,
   },
   social_type: {
     type: SQ.DataTypes.STRING(255),

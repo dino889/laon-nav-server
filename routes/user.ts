@@ -1,44 +1,28 @@
 import express from "express";
+import {
+  checkEmailExist,
+  createUser,
+  getUserById,
+  removeUserById,
+  updateUserById,
+  handleLogin,
+  verifyToken,
+} from "../controller/user";
 
 const userRouter = express.Router();
 
-// - GET 회원정보 조회(user_id)
-userRouter.get("/", (req, res, next) => {
-  res.send("GET user");
-});
+userRouter.get("/exist", checkEmailExist); // - 이메일 중복확인
 
-// - POST 회원가입 (social 여부도 포함)
-userRouter.post("/", (req, res, next) => {
-  res.send("POST user");
-});
+userRouter.get("/verify", verifyToken); // 토큰 유효성 검사
 
-// - PUT 회원정보 수정(user_id)
-userRouter.put("/", (req, res, next) => {
-  res.send("PUT user");
-});
+userRouter.get("/:id", getUserById); // - GET 회원정보 조회(user_id)
 
-// - DELETE(user_id)
-userRouter.delete("/", (req, res, next) => {
-  res.send("DELETE user");
-});
+userRouter.post("/", createUser); // - POST 회원가입 (social 여부도 포함) ** 소셜로그인일 경우 uid가 password로 들어옴
 
-// - 이메일 중복확인
-userRouter.get("/exist", (req, res, next) => {
-  const { email } = req.query;
-  res.send(`GET exist email? ${email}`);
-});
+userRouter.put("/:id", updateUserById); // - PUT 회원정보 수정(user_id)
 
-// - 로그인
-userRouter.post("/login", (req, res, next) => {
-  res.send("POST user login");
-});
+userRouter.delete("/:id", removeUserById); // - DELETE(user_id)
 
-// - 패스워드 초기화
-userRouter.post("/reset", (req, res, next) => {
-  const { password } = req.query;
-  res.send(`POST reset password = ${password}`);
-});
-
-// - email 인증?
+userRouter.post("/login", handleLogin); // - 로그인
 
 export default userRouter;
