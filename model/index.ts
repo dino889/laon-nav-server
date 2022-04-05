@@ -23,7 +23,7 @@ export async function dbinit() {
     console.log("Connection has been established successfully.");
     // 🔥 Model 마이그레이션
     (async () => {
-      await sequelize.sync(); //{ alter: true }
+      await sequelize.sync({ alter: true }); //{ alter: true }
       // Code here
     })();
   } catch (error) {
@@ -155,6 +155,32 @@ export const Place = sequelize.define("place", {
   },
 });
 
+export const Review = sequelize.define("review", {
+  id: {
+    type: SQ.DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+    allowNull: false,
+  },
+  rate: {
+    type: SQ.DataTypes.INTEGER,
+    defaultValue: 0,
+  },
+  content: {
+    type: SQ.DataTypes.STRING(255),
+    allowNull: false,
+  },
+});
+
+export const Like = sequelize.define("like", {
+  id: {
+    type: SQ.DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+    allowNull: false,
+  },
+});
+
 //  🍎 관계 정의
 Notification.belongsTo(User, {
   onDelete: "CASCADE",
@@ -162,3 +188,23 @@ Notification.belongsTo(User, {
 });
 
 Place.belongsTo(Area);
+
+Review.belongsTo(Place, {
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
+});
+
+Review.belongsTo(User, {
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
+});
+
+Like.belongsTo(Place, {
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
+});
+
+Like.belongsTo(User, {
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
+});

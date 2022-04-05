@@ -124,7 +124,7 @@ export const checkEmailExist = async (req: express.Request, res: express.Respons
     };
   } else {
     responseData = {
-      isSuccess: false,
+      isSuccess: true,
       message: `there is no email(${targetEmail})`,
       data: {},
     };
