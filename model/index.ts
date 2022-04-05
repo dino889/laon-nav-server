@@ -4,11 +4,11 @@ import dotenv from "dotenv";
 dotenv.config();
 
 // 👋 DB 정의
-export const sequelize = new SQ.Sequelize("navdb", "root", "1234", {
+export const sequelize = new SQ.Sequelize(process.env.DB_NAME!, process.env.DB_USER!, process.env.DB_PASSWORD!, {
   host: process.env.DB_HOST,
   dialect: "mysql",
   pool: {
-    max: 5,
+    max: 10,
     min: 0,
     idle: 1000,
   },
