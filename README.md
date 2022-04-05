@@ -1,5 +1,10 @@
 ## 나를위한 server
 
+## TODO
+
+- [ ] FCM 추가
+- [ ] 자동경로 추천 API 추가
+
 ## stack
 
 - node
@@ -76,3 +81,31 @@ yarn stop
 - 내주변 장소 리스트 (10km? 정도)
 - 리뷰 많은 순 장소 리스트
 - 리뷰 좋은 순 장소 리스트
+
+## Docker
+
+### container
+
+```bash
+docker run -it -d -p 7878:7878 --name laon-nav-server  node:17-alpine3.14
+```
+
+### install
+
+```bash
+apt add git
+```
+
+### use
+
+```bash
+docker exec -it laon-nav-server /bin/sh
+```
+
+### 배포환경
+
+#### domain(naver cloud platform)
+
+```bash
+http://115.85.180.240:7878
+```
