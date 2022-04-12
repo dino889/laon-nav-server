@@ -30,6 +30,7 @@ interface PlaceDB {
   summary: string;
   description: string;
   rating: number;
+  heartCount: number;
   lat: number;
   long: number;
   imgURL: string;
@@ -49,7 +50,8 @@ export async function placeDataInsert() {
       name: place.trrsrtNm,
       summary: place.trrsrtIntrcn.slice(0, 100),
       description: place.trrsrtIntrcn,
-      rating: getRandomRate(100),
+      rating: getRandomRate(5),
+      heartCount: getRandomRate(100),
       lat: Number(place.latitude),
       long: Number(place.longitude),
       imgURL: "https://picsum.photos/250/200",
