@@ -110,7 +110,7 @@ export const toggleLike = async (req: express.Request, res: express.Response, ne
   let responseData: ResponseData = {
     isSuccess: true,
     message: isExist ? "찜(좋아요) 취소되었습니다." : "찜(좋아요) 하였습니다",
-    data: result ? result.toJSON : {},
+    data: result ? { ...result.toJSON } : {},
   };
   res.status(200).json(responseData);
 };

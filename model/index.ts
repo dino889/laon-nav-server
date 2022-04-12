@@ -130,8 +130,12 @@ export const Place = sequelize.define("place", {
     type: SQ.DataTypes.TEXT,
     allowNull: true,
   },
-  rating: {
+  heartCount: {
     type: SQ.DataTypes.INTEGER,
+    defaultValue: 0,
+  },
+  rating: {
+    type: SQ.DataTypes.FLOAT,
     defaultValue: 0,
   },
   lat: {
@@ -188,6 +192,11 @@ Notification.belongsTo(User, {
 });
 
 Place.belongsTo(Area);
+Place.hasMany(Like);
+Like.belongsTo(Place, {
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
+});
 
 Review.belongsTo(Place, {
   onDelete: "CASCADE",
