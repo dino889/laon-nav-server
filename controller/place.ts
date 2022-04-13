@@ -27,7 +27,7 @@ export const getLikedPlaceByUserId = async (
   res: express.Response,
   next: express.NextFunction
 ) => {
-  const { userid } = req.query;
+  const { userid } = req.params;
   const result = await Like.findAll({
     where: {
       userId: Number(userid),
