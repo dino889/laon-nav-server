@@ -6,7 +6,8 @@
     "dev": "concurrently \" npx tsc --watch \" \" npx nodemon ./bin/www \" ",
     "build": "npx tsc",
     "start": "npx pm2 start ./bin/www -o ./public/logs/out.log -e ./public/logs/err.log",
-    "stop": "npx pm2 delete all"
+    "stop": "npx pm2 delete all",
+    "restart": "npx pm2 restart all"
   },
   "dependencies": {
     "@types/cors": "^2.8.12",

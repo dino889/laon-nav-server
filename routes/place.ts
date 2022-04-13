@@ -12,7 +12,7 @@ import {
 const placeRouter = express.Router();
 
 // place by 지역
-placeRouter.get("/like", getLikedPlaceByUserId);
+placeRouter.get("/userlike", getLikedPlaceByUserId);
 
 placeRouter.get("/", getPlaceByArea);
 
