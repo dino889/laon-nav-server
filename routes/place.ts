@@ -6,11 +6,14 @@ import {
   getReviewByPlaceId,
   removeReviewById,
   toggleLike,
+  getLikedPlaceByUserId,
 } from "../controller/place";
 
 const placeRouter = express.Router();
 
 // place by 지역
+placeRouter.get("/like", getLikedPlaceByUserId);
+
 placeRouter.get("/", getPlaceByArea);
 
 // review 삭제

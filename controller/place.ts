@@ -22,6 +22,27 @@ export const getPlaceByArea = async (req: express.Request, res: express.Response
   res.status(200).json(responseData);
 };
 
+export const getLikedPlaceByUserId = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
+  const { userid } = req.query;
+  const result = await Like.findAll({
+    where: {
+      userId: Number(userid),
+    },
+    attributes: [],
+    include: { model: Place },
+  });
+  let responseData: ResponseData = {
+    isSuccess: true,
+    message: `${userid}유저의 찜한 장소리스트입니다`,
+    data: result,
+  };
+  res.status(200).json(responseData);
+};
+
 export const getPlaceById = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const { id } = req.params;
   const result = await Place.findByPk(Number(id));
