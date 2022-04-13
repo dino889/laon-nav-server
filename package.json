@@ -7,7 +7,7 @@
     "build": "npx tsc",
     "start": "npx pm2 start ./bin/www -o ./public/logs/out.log -e ./public/logs/err.log",
     "stop": "npx pm2 delete all",
-    "restart": "npx pm2 restart all"
+    "restart": "concurrently \" npm run build \" \" npm run stop \" \" npm start \" "
   },
   "dependencies": {
     "@types/cors": "^2.8.12",
