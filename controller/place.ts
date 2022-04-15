@@ -4,13 +4,18 @@ import * as SQ from "sequelize";
 import { ResponseData } from "../custom";
 const Op = SQ.Op;
 
+// sort = reivew, reivew_asc (default : rating)
 export const getPlaceByArea = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
-  const { areaName, sort } = req.query;
+  let { areaName, sort } = req.query;
 
-  // const orderOption = {
-  //   default : ["rating","DESC"],
-  //   reivew : ['']
-  // }
+  if (!sort) {
+    sort = "default";
+  }
+  const orderOption: any = {
+    default: [["rating", "DESC"]],
+    reivew: [[SQ.Sequelize.literal("reivewCnt"), "DESC"]],
+    reivew_asc: [[SQ.Sequelize.literal("reivewCnt"), "ASC"]],
+  };
 
   const result = await Place.findAll({
     where: {
@@ -30,13 +35,15 @@ export const getPlaceByArea = async (req: express.Request, res: express.Response
       "imgURL",
       "type",
       "address",
+      [SQ.Sequelize.fn("COUNT", SQ.Sequelize.col("reviews.id")), "reivewCnt"],
     ],
     include: {
       model: Review,
-      attributes: [[SQ.Sequelize.fn("COUNT", SQ.Sequelize.col("*")), "reivewCnt"]],
+      attributes: [],
     },
     group: ["id"],
-    order: [["rating", "DESC"]],
+    order: orderOption[sort as string],
+    // ["rating", "DESC"]
   });
   let responseData: ResponseData = {
     isSuccess: true,
