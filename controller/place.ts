@@ -5,13 +5,37 @@ import { ResponseData } from "../custom";
 const Op = SQ.Op;
 
 export const getPlaceByArea = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
-  const { areaName } = req.query;
+  const { areaName, sort } = req.query;
+
+  // const orderOption = {
+  //   default : ["rating","DESC"],
+  //   reivew : ['']
+  // }
+
   const result = await Place.findAll({
     where: {
       address: {
         [Op.like]: `${areaName}%`,
       },
     },
+    attributes: [
+      "id",
+      "name",
+      "summary",
+      "description",
+      "heartCount",
+      "rating",
+      "lat",
+      "long",
+      "imgURL",
+      "type",
+      "address",
+    ],
+    include: {
+      model: Review,
+      attributes: [[SQ.Sequelize.fn("COUNT", SQ.Sequelize.col("*")), "reivewCnt"]],
+    },
+    group: ["id"],
     order: [["rating", "DESC"]],
   });
   let responseData: ResponseData = {

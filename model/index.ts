@@ -193,6 +193,7 @@ Notification.belongsTo(User, {
 
 Place.belongsTo(Area);
 Place.hasMany(Like);
+Place.hasMany(Review);
 Like.belongsTo(Place, {
   onDelete: "CASCADE",
   onUpdate: "CASCADE",

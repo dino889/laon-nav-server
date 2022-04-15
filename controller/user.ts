@@ -36,7 +36,6 @@ export const getUserFromEmailandUserName = async (
       username: username as string,
     },
   });
-  console.log(selected);
 
   let responseData: ResponseData;
   if (selected) {

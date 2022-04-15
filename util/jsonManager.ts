@@ -92,3 +92,5 @@ export async function areaDataInsert() {
     console.log(result);
   });
 }
+
+export async function initPlaceType() {}
