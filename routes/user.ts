@@ -7,11 +7,14 @@ import {
   updateUserById,
   handleLogin,
   verifyToken,
+  getUserFromEmailandUserName,
 } from "../controller/user";
 
 const userRouter = express.Router();
 
 userRouter.get("/exist", checkEmailExist); // - 이메일 중복확인
+
+userRouter.get("/find", getUserFromEmailandUserName);
 
 userRouter.get("/verify", verifyToken); // 토큰 유효성 검사
 

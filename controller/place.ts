@@ -121,11 +121,15 @@ export const toggleLike = async (req: express.Request, res: express.Response, ne
         placeId: Number(placeId),
       },
     });
+
+    await Place.increment("hearCount", { by: 1 });
   } else {
     result = await Like.create({
       userId: Number(userId),
       placeId: Number(placeId),
     });
+
+    await Place.decrement("hearCount", { by: 1 });
   }
 
   let responseData: ResponseData = {

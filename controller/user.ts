@@ -24,6 +24,39 @@ export const createUser = async (req: express.Request, res: express.Response, ne
   res.status(201).json(responseData);
 };
 
+export const getUserFromEmailandUserName = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
+  const { email, username } = req.query;
+  const selected = await User.findOne({
+    where: {
+      email: email as string,
+      username: username as string,
+    },
+  });
+  console.log(selected);
+
+  let responseData: ResponseData;
+  if (selected) {
+    responseData = {
+      isSuccess: true,
+      message: "",
+      data: selected.toJSON(),
+    };
+  } else {
+    responseData = {
+      isSuccess: false,
+      message: `there is no user(${email})`,
+      data: {},
+    };
+    return res.status(400).json(responseData);
+  }
+
+  res.status(200).json(responseData);
+};
+
 export const getUserById = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const { id } = req.params;
   const selected = await User.findByPk(id);
@@ -120,7 +153,7 @@ export const checkEmailExist = async (req: express.Request, res: express.Respons
     responseData = {
       isSuccess: true,
       message: `exist email(${targetEmail})`,
-      data: {},
+      data: { social_type: result.getDataValue("social_type") },
     };
   } else {
     responseData = {
