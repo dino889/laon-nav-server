@@ -16,7 +16,7 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER_NAME }}
-          port:${{ secrets.PORT }}
+          port: ${{ secrets.PORT }}
           script: |
             cd app/laon-nav-server
             git pull
