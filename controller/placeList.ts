@@ -1,11 +1,11 @@
 import express from "express";
-import { Like, Place, Review, User } from "../model";
+import { Like, Place, PlaceList, PlaceListLike, PlaceListReview, Review, User } from "../model";
 import * as SQ from "sequelize";
 import { ResponseData } from "../custom";
 const Op = SQ.Op;
 
 // sort = reivew, reivew_asc (default : rating)
-export const getPlaceByArea = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+export const getPlaceListByArea = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   let { areaName, sort } = req.query;
 
   if (!sort) {
@@ -17,28 +17,25 @@ export const getPlaceByArea = async (req: express.Request, res: express.Response
     reivew_asc: [[SQ.Sequelize.literal("reivewCnt"), "ASC"]],
   };
 
-  const result = await Place.findAll({
+  const result = await PlaceList.findAll({
     where: {
-      address: {
+      name: {
         [Op.like]: `${areaName}%`,
       },
     },
     attributes: [
       "id",
       "name",
-      "summary",
       "description",
       "heartCount",
       "rating",
-      "lat",
-      "long",
       "imgURL",
       "type",
-      "address",
-      [SQ.Sequelize.fn("COUNT", SQ.Sequelize.col("reviews.id")), "reivewCnt"],
+      "placeIdList",
+      [SQ.Sequelize.fn("COUNT", SQ.Sequelize.col("place_list_reviews.id")), "reivewCnt"],
     ],
     include: {
-      model: Review,
+      model: PlaceListReview,
       attributes: [],
     },
     group: ["id"],
@@ -47,28 +44,28 @@ export const getPlaceByArea = async (req: express.Request, res: express.Response
   });
   let responseData: ResponseData = {
     isSuccess: true,
-    message: `${areaName} 지역의 장소리스트입니다`,
+    message: `${areaName} 지역의 추천경로들 입니다`,
     data: result,
   };
   res.status(200).json(responseData);
 };
 
-export const getLikedPlaceByUserId = async (
+export const getLikedPlaceListByUserId = async (
   req: express.Request,
   res: express.Response,
   next: express.NextFunction
 ) => {
   const { userid } = req.params;
-  const result = await Like.findAll({
+  const result = await PlaceListLike.findAll({
     where: {
       userId: Number(userid),
     },
     attributes: [],
-    include: { model: Place },
+    include: { model: PlaceList },
   });
   let responseData: ResponseData = {
     isSuccess: true,
-    message: `${userid}유저의 찜한 장소리스트입니다`,
+    message: `${userid} 유저의 찜한 경로 리스트입니다`,
     data: result,
   };
   res.status(200).json(responseData);
@@ -136,38 +133,38 @@ export const removeReviewById = async (req: express.Request, res: express.Respon
   res.status(200).json(responseData);
 };
 
-export const toggleLike = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
-  const { userId, placeId } = req.body;
+export const togglePlaceListLike = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  const { userId, placeListId } = req.body;
   let result;
-  const isExist = await Like.findOne({
+  const isExist = await PlaceListLike.findOne({
     where: {
       userId: Number(userId),
-      placeId: Number(placeId),
+      placeListId: Number(placeListId),
     },
   });
   if (isExist) {
-    await Like.destroy({
+    await PlaceListLike.destroy({
       where: {
         userId: Number(userId),
-        placeId: Number(placeId),
+        placeListId: Number(placeListId),
       },
     });
-    await Place.decrement("heartCount", {
+    await PlaceList.decrement("heartCount", {
       by: 1,
       where: {
-        id: Number(placeId),
+        id: Number(placeListId),
       },
     });
   } else {
-    result = await Like.create({
+    result = await PlaceListLike.create({
       userId: Number(userId),
-      placeId: Number(placeId),
+      placeListId: Number(placeListId),
     });
 
-    await Place.increment("heartCount", {
+    await PlaceList.increment("heartCount", {
       by: 1,
       where: {
-        id: Number(placeId),
+        id: Number(placeListId),
       },
     });
   }
@@ -178,4 +175,54 @@ export const toggleLike = async (req: express.Request, res: express.Response, ne
     data: result ? { ...result.toJSON } : {},
   };
   res.status(200).json(responseData);
+};
+
+export const initPlaceList = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  const areaList = [
+    "대구광역시",
+    "경기도",
+    "부산광역시",
+    "인천광역시",
+    "전라남도",
+    "서울특별시",
+    "경상북도",
+    "전라북도",
+    "제주도",
+    "경상남도",
+  ];
+
+  areaList.forEach(async (area) => {
+    const areaName = area;
+    const result: { [key: string]: any } = await Place.findAll({
+      where: {
+        address: {
+          [Op.like]: `${areaName}%`,
+        },
+      },
+    });
+    const total = result.length; // 9
+
+    let startPoint = 0;
+    for (let i = 0; i < total / 4; i++) {
+      let placeIdlist: number[] | string = [
+        result[startPoint].id,
+        result[startPoint + 1].id,
+        result[startPoint + 2].id,
+        result[startPoint + 3].id,
+      ];
+      placeIdlist = JSON.stringify(placeIdlist);
+      const placeList = await PlaceList.create({
+        name: `${areaName} 추천 경로${i + 1}`,
+        description: `올해의 ${areaName} 추천 경로입니다`,
+        rating: Math.floor(Math.random() * 5),
+        imgURL: result[startPoint].imgURL,
+        type: result[startPoint].type,
+        placeIdList: placeIdlist,
+      });
+
+      placeList.save();
+      startPoint += 4;
+    }
+  });
+  res.status(200).json("done");
 };

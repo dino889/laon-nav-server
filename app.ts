@@ -13,6 +13,7 @@ import userRouter from "./routes/user";
 import notificationRouter from "./routes/notification";
 import areaRouter from "./routes/area";
 import placeRouter from "./routes/place";
+import placeListRouter from "./routes/placeList";
 
 // sequelize
 dbinit();
@@ -33,6 +34,7 @@ app.use("/users", userRouter);
 app.use("/notifications", notificationRouter);
 app.use("/areas", areaRouter);
 app.use("/places", placeRouter);
+app.use("/place_list", placeListRouter);
 
 // catch 404 and forward to error handler
 app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {

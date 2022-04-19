@@ -93,4 +93,11 @@ export async function areaDataInsert() {
   });
 }
 
-export async function initPlaceType() {}
+export async function placesJsonReader() {
+  let data: any = await fs.promises.readFile("./data/places.json", { encoding: "utf8" });
+  data = JSON.parse(data);
+  data = data.places.map((i: any) => i.trrsrtNm);
+  data = JSON.stringify(data);
+  let wr = await fs.promises.writeFile("./data/place-names.json", data);
+  console.log(data);
+}

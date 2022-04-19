@@ -159,6 +159,43 @@ export const Place = sequelize.define("place", {
   },
 });
 
+export const PlaceList = sequelize.define("place_list", {
+  id: {
+    type: SQ.DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+    allowNull: false,
+  },
+  name: {
+    type: SQ.DataTypes.STRING(100),
+    allowNull: false,
+  },
+  description: {
+    type: SQ.DataTypes.TEXT,
+    allowNull: true,
+  },
+  heartCount: {
+    type: SQ.DataTypes.INTEGER,
+    defaultValue: 0,
+  },
+  rating: {
+    type: SQ.DataTypes.FLOAT,
+    defaultValue: 0,
+  },
+  imgURL: {
+    type: SQ.DataTypes.TEXT,
+    allowNull: true,
+  },
+  type: {
+    type: SQ.DataTypes.STRING(100),
+    allowNull: true,
+  },
+  placeIdList: {
+    type: SQ.DataTypes.STRING(255),
+    allowNull: false,
+  },
+});
+
 export const Review = sequelize.define("review", {
   id: {
     type: SQ.DataTypes.INTEGER,
@@ -176,7 +213,33 @@ export const Review = sequelize.define("review", {
   },
 });
 
+export const PlaceListReview = sequelize.define("place_list_review", {
+  id: {
+    type: SQ.DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+    allowNull: false,
+  },
+  rate: {
+    type: SQ.DataTypes.INTEGER,
+    defaultValue: 0,
+  },
+  content: {
+    type: SQ.DataTypes.STRING(255),
+    allowNull: false,
+  },
+});
+
 export const Like = sequelize.define("like", {
+  id: {
+    type: SQ.DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+    allowNull: false,
+  },
+});
+
+export const PlaceListLike = sequelize.define("place_list_like", {
   id: {
     type: SQ.DataTypes.INTEGER,
     autoIncrement: true,
@@ -209,12 +272,31 @@ Review.belongsTo(User, {
   onUpdate: "CASCADE",
 });
 
-Like.belongsTo(Place, {
+Like.belongsTo(User, {
   onDelete: "CASCADE",
   onUpdate: "CASCADE",
 });
 
-Like.belongsTo(User, {
+//
+
+PlaceList.hasMany(PlaceListLike);
+PlaceList.hasMany(PlaceListReview);
+PlaceListLike.belongsTo(PlaceList, {
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
+});
+
+PlaceListReview.belongsTo(PlaceList, {
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
+});
+
+PlaceListReview.belongsTo(User, {
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
+});
+
+PlaceListLike.belongsTo(User, {
   onDelete: "CASCADE",
   onUpdate: "CASCADE",
 });
