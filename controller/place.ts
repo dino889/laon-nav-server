@@ -1,5 +1,5 @@
 import express from "express";
-import { Like, Place, Review, User } from "../model";
+import { Like, Place, Review, sequelize, User } from "../model";
 import * as SQ from "sequelize";
 import { ResponseData } from "../custom";
 const Op = SQ.Op;
@@ -176,6 +176,22 @@ export const toggleLike = async (req: express.Request, res: express.Response, ne
     isSuccess: true,
     message: isExist ? "찜(좋아요) 취소되었습니다." : "찜(좋아요) 하였습니다",
     data: result ? { ...result.toJSON } : {},
+  };
+  res.status(200).json(responseData);
+};
+
+// sort = reivew, reivew_asc (default : rating)
+export const getPlaceByGPS = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  let { lat, long, range } = req.query;
+
+  const result = await sequelize.query(
+    `SELECT * , (6371 * acos(cos(radians(${lat})) * cos(radians(places.lat)) * cos(radians(places.long) - radians(${long})) + sin(radians(${lat}))*sin(radians(places.lat)))) AS distance FROM places HAVING distance <= ${range} ORDER BY distance;`,
+    { type: SQ.QueryTypes.SELECT }
+  );
+  let responseData: ResponseData = {
+    isSuccess: true,
+    message: `${lat} ${long} 위치의 장소리스트입니다`,
+    data: result,
   };
   res.status(200).json(responseData);
 };
