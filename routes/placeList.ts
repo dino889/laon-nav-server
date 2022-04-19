@@ -4,6 +4,8 @@ import {
   getPlaceListByArea,
   getLikedPlaceListByUserId,
   togglePlaceListLike,
+  createReview,
+  removeReviewById,
 } from "../controller/placeList";
 
 const placeListRouter = express.Router();
@@ -14,9 +16,7 @@ placeListRouter.get("/userlike/:userid", getLikedPlaceListByUserId);
 placeListRouter.get("/", getPlaceListByArea);
 
 // review 삭제
-placeListRouter.delete("/review/:id", (req, res, next) => {
-  res.send("place list API");
-});
+placeListRouter.delete("/review/:id", removeReviewById);
 
 // placeList id를 받아서 reivew 가져오기
 placeListRouter.get("/review", (req, res, next) => {
@@ -24,9 +24,7 @@ placeListRouter.get("/review", (req, res, next) => {
 });
 
 // review 작성
-placeListRouter.post("/review", (req, res, next) => {
-  res.send("place list API");
-});
+placeListRouter.post("/review", createReview);
 
 // TODO: toggle 로 동작하도록 해야됨
 placeListRouter.post("/like", togglePlaceListLike);

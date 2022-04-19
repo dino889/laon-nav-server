@@ -71,30 +71,18 @@ export const getLikedPlaceListByUserId = async (
   res.status(200).json(responseData);
 };
 
-export const getPlaceById = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
-  const { id } = req.params;
-  const result = await Place.findByPk(Number(id));
-  console.log(result);
-  let responseData: ResponseData = {
-    isSuccess: result ? true : false,
-    message: ``,
-    data: result ? result.toJSON() : {},
-  };
-  res.status(200).json(responseData);
-};
-
 export const createReview = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
-  const { placeId, userId, content, rate } = req.body;
-  const result = await Review.create({
+  const { placeListId, userId, content, rate } = req.body;
+  const result = await PlaceListReview.create({
     rate,
     content,
     userId,
-    placeId,
+    placeListId,
   });
 
   let responseData: ResponseData = {
     isSuccess: result ? true : false,
-    message: `리뷰가 성공적으로 작성되었습니다`,
+    message: `리뷰가 성공적으로 작성되었습니다(경로)`,
     data: result ? result.toJSON() : {},
   };
   res.status(201).json(responseData);
@@ -119,7 +107,7 @@ export const getReviewByPlaceId = async (req: express.Request, res: express.Resp
 
 export const removeReviewById = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const { id } = req.params;
-  const result = await Review.destroy({
+  const result = await PlaceListReview.destroy({
     where: {
       id,
     },
