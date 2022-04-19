@@ -6,6 +6,7 @@ import {
   togglePlaceListLike,
   createReview,
   removeReviewById,
+  getReviewByPlaceId,
 } from "../controller/placeList";
 
 const placeListRouter = express.Router();
@@ -19,9 +20,7 @@ placeListRouter.get("/", getPlaceListByArea);
 placeListRouter.delete("/review/:id", removeReviewById);
 
 // placeList id를 받아서 reivew 가져오기
-placeListRouter.get("/review", (req, res, next) => {
-  res.send("place list API");
-});
+placeListRouter.get("/review", getReviewByPlaceId);
 
 // review 작성
 placeListRouter.post("/review", createReview);
@@ -31,10 +30,5 @@ placeListRouter.post("/like", togglePlaceListLike);
 
 // TODO: 경로 만들기
 // placeListRouter.get("/init", initPlaceList);
-
-// placeList by ID
-placeListRouter.get("/:id", (req, res, next) => {
-  res.send("place list API");
-});
 
 export default placeListRouter;

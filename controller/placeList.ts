@@ -89,17 +89,17 @@ export const createReview = async (req: express.Request, res: express.Response, 
 };
 
 export const getReviewByPlaceId = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
-  const { placeId } = req.query;
-  const result = await Review.findAll({
+  const { placeListId } = req.query;
+  const result = await PlaceListReview.findAll({
     where: {
-      placeId: Number(placeId),
+      placeListId: Number(placeListId),
     },
     include: [{ model: User, as: "user", attributes: ["nickname"] }],
   });
 
   let responseData: ResponseData = {
     isSuccess: result ? true : false,
-    message: `${placeId} 의 리뷰목록입니다.`,
+    message: `${placeListId} 의 리뷰목록입니다.`,
     data: result ? result : {},
   };
   res.status(201).json(responseData);
