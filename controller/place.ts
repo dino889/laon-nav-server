@@ -74,6 +74,19 @@ export const getLikedPlaceByUserId = async (
   res.status(200).json(responseData);
 };
 
+export const getCategory = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  const result = await Place.findAll({
+    attributes: ["type"],
+    group: ["type"],
+  });
+  let responseData: ResponseData = {
+    isSuccess: true,
+    message: `장소의 모든 카테고리 목록입니다`,
+    data: result.map((r: any) => r.type),
+  };
+  res.status(200).json(responseData);
+};
+
 export const getPlaceById = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const { id } = req.params;
   const result = await Place.findByPk(Number(id));

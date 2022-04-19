@@ -8,6 +8,7 @@ import {
   toggleLike,
   getLikedPlaceByUserId,
   getPlaceByGPS,
+  getCategory,
 } from "../controller/place";
 
 const placeRouter = express.Router();
@@ -25,6 +26,9 @@ placeRouter.get("/review", getReviewByPlaceId);
 
 // review 작성
 placeRouter.post("/review", createReview);
+
+// type 목록 반환
+placeRouter.get("/category", getCategory);
 
 // GPS기반 경로 추천 받기
 placeRouter.get("/gps", getPlaceByGPS);
