@@ -9,6 +9,7 @@ import {
   getLikedPlaceByUserId,
   getPlaceByGPS,
   getCategory,
+  getPlaceByIdArray,
 } from "../controller/place";
 
 const placeRouter = express.Router();
@@ -35,6 +36,8 @@ placeRouter.get("/gps", getPlaceByGPS);
 
 // TODO: toggle 로 동작하도록 해야됨
 placeRouter.post("/like", toggleLike);
+
+placeRouter.get("/array/:arr", getPlaceByIdArray);
 
 // place by ID
 placeRouter.get("/:id", getPlaceById);

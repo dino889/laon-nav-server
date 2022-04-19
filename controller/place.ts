@@ -99,6 +99,22 @@ export const getPlaceById = async (req: express.Request, res: express.Response, 
   res.status(200).json(responseData);
 };
 
+export const getPlaceByIdArray = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  const { arr } = req.params;
+  const result = await Place.findAll({
+    where: {
+      id: JSON.parse(arr),
+    },
+  });
+  console.log(result);
+  let responseData: ResponseData = {
+    isSuccess: result ? true : false,
+    message: ``,
+    data: result,
+  };
+  res.status(200).json(responseData);
+};
+
 export const createReview = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const { placeId, userId, content, rate } = req.body;
   const result = await Review.create({

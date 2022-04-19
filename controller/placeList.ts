@@ -42,6 +42,7 @@ export const getPlaceListByArea = async (req: express.Request, res: express.Resp
     order: orderOption[sort as string],
     // ["rating", "DESC"]
   });
+
   let responseData: ResponseData = {
     isSuccess: true,
     message: `${areaName} 지역의 추천경로들 입니다`,
