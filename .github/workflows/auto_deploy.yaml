@@ -20,4 +20,5 @@ jobs:
           script: |
             cd app/laon-nav-server
             git pull
+            npm i
             npm run restart
