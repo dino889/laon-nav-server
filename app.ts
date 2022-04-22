@@ -31,7 +31,7 @@ app.use(express.static(path.join(__dirname, "..", "public")));
 
 app.use("/", indexRouter);
 app.use("/users", userRouter);
-app.use("/notifications", notificationRouter);
+app.use("/fcm", notificationRouter);
 app.use("/areas", areaRouter);
 app.use("/places", placeRouter);
 app.use("/place_list", placeListRouter);

@@ -22,10 +22,7 @@ export async function dbinit() {
     await sequelize.authenticate();
     console.log("Connection has been established successfully.");
     // 🔥 Model 마이그레이션
-    (async () => {
-      await sequelize.sync({ alter: true }); //{ alter: true }
-      // Code here
-    })();
+      await sequelize.sync({ alter: false }); //{ alter: true }
   } catch (error) {
     console.error("Unable to connect to the database:", error);
   }

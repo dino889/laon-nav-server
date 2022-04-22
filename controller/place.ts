@@ -90,7 +90,6 @@ export const getCategory = async (req: express.Request, res: express.Response, n
 export const getPlaceById = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const { id } = req.params;
   const result = await Place.findByPk(Number(id));
-  console.log(result);
   let responseData: ResponseData = {
     isSuccess: result ? true : false,
     message: ``,
@@ -106,7 +105,6 @@ export const getPlaceByIdArray = async (req: express.Request, res: express.Respo
       id: JSON.parse(arr),
     },
   });
-  console.log(result);
   let responseData: ResponseData = {
     isSuccess: result ? true : false,
     message: ``,

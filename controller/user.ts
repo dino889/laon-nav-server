@@ -90,7 +90,6 @@ export const updateUserById = async (req: express.Request, res: express.Response
       },
     }
   );
-  console.log(result[0]);
 
   if (result[0] > 0) {
     responseData = {
@@ -181,7 +180,6 @@ export const handleLogin = async (req: express.Request, res: express.Response, n
   if (result) {
     const userData = result.toJSON();
     const newToken: string = tokenManager.createToken(userData.id, userData.username, userData.email);
-    console.log(newToken);
 
     responseData = {
       isSuccess: true,
@@ -203,6 +201,5 @@ export const verifyToken = async (req: express.Request, res: express.Response, n
   const { authorization } = req.headers;
   const token = authorization?.split(" ")[1]!;
   const decoded = tokenManager.verifyToken(token);
-  console.log(decoded);
   res.json(decoded);
 };

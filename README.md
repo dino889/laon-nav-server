@@ -1,5 +1,7 @@
 ## 나를위한 server
 
+> 작업은 develop에서하고 master에 push해서 CD 사용하면됩니다.
+
 ## TODO
 
 - [ ] FCM 추가

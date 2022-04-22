@@ -58,7 +58,7 @@ export async function placeDataInsert() {
       address: place.lnmadr,
     };
     const result = await Place.create({ ...data });
-    console.log(result);
+    result;
   });
 }
 
@@ -89,7 +89,6 @@ export async function areaDataInsert() {
 
   areaList.forEach(async (area) => {
     const result = await Area.create({ name: area });
-    console.log(result);
   });
 }
 
@@ -99,5 +98,5 @@ export async function placesJsonReader() {
   data = data.places.map((i: any) => i.trrsrtNm);
   data = JSON.stringify(data);
   let wr = await fs.promises.writeFile("./data/place-names.json", data);
-  console.log(data);
+  data;
 }
