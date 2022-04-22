@@ -168,16 +168,16 @@ export const togglePlaceListLike = async (req: express.Request, res: express.Res
 
 export const initPlaceList = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const areaList = [
-    "대구광역시",
-    "경기도",
-    "부산광역시",
-    "인천광역시",
-    "전라남도",
-    "서울특별시",
-    "경상북도",
-    "전라북도",
-    "제주도",
-    "경상남도",
+    // "대구광역시",
+    // "경기도",
+    // "부산광역시",
+    // "인천광역시",
+    // "전라남도",
+    // "서울특별시",
+    // "경상북도",
+    // "전라북도",
+    "제주특별자치도",
+    // "경상남도",
   ];
 
   areaList.forEach(async (area) => {

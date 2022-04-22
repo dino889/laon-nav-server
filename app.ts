@@ -16,7 +16,7 @@ import placeRouter from "./routes/place";
 import placeListRouter from "./routes/placeList";
 
 // sequelize
-dbinit();
+// dbinit();
 const app = express();
 
 app.set("views", path.join(__dirname, "..", "views"));
@@ -31,7 +31,7 @@ app.use(express.static(path.join(__dirname, "..", "public")));
 
 app.use("/", indexRouter);
 app.use("/users", userRouter);
-app.use("/fcm", notificationRouter);
+app.use("/notification", notificationRouter);
 app.use("/areas", areaRouter);
 app.use("/places", placeRouter);
 app.use("/place_list", placeListRouter);
