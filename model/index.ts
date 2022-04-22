@@ -7,6 +7,7 @@ dotenv.config();
 export const sequelize = new SQ.Sequelize(process.env.DB_NAME!, process.env.DB_USER!, process.env.DB_PASSWORD!, {
   host: process.env.DB_HOST,
   dialect: "mysql",
+  password:process.env.DB_PASSWORD,
   pool: {
     max: 10,
     min: 0,
@@ -19,10 +20,8 @@ export const sequelize = new SQ.Sequelize(process.env.DB_NAME!, process.env.DB_U
 // 🚀 DB 연결
 export async function dbinit() {
   try {
-    await sequelize.authenticate();
     console.log("Connection has been established successfully.");
-    // 🔥 Model 마이그레이션
-      await sequelize.sync({ alter: false }); //{ alter: true }
+      await sequelize.sync({ alter: false });
   } catch (error) {
     console.error("Unable to connect to the database:", error);
   }
