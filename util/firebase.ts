@@ -24,14 +24,14 @@ export async function sendFCMtoTopic(userid:string,data:{[key:string]:string}){
         // topic,
         token:userToken
     };
-    messaging.send(message).then(response=>{
+    messaging.send(message).then((response:string)=>{
         console.log('메세지 전송 성공 : ' ,response);
         Notification.create({
             userId:userid,
             ...data,
             token:userToken
         })
-    }).catch(e=>{
+    }).catch((e:any)=>{
         console.log('메세지 전송 에러 : ',e)
     })
 }
