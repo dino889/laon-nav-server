@@ -13,8 +13,8 @@ export const getPlaceByArea = async (req: express.Request, res: express.Response
   }
   const orderOption: any = {
     default: [["rating", "DESC"]],
-    reivew: [[SQ.Sequelize.literal("reivewCnt"), "DESC"]],
-    reivew_asc: [[SQ.Sequelize.literal("reivewCnt"), "ASC"]],
+    review: [[SQ.Sequelize.literal("reivewCnt"), "DESC"]],
+    review_asc: [[SQ.Sequelize.literal("reivewCnt"), "ASC"]],
   };
 
   const result = await Place.findAll({
