@@ -28,7 +28,7 @@ notificationRouter.post('/:userId',(req,res)=>{
     body:req.body.body,
     type:req.body.type
   })
-  res.send('done')
+  res.send('done!')
 })
 
 notificationRouter.delete('/:id',async(req,res)=>{
