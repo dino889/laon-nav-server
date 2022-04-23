@@ -6,7 +6,7 @@
     "dev": "npx nodemon --watch './**/*.ts' --exec npx ts-node app.ts ",
     "start": "npx pm2 start app.ts --name=nav-server -o ./public/logs/out.log -e ./public/logs/err.log",
     "stop": "npx pm2 delete nav-server",
-    "restart": "npx pm2 restart nav-server"
+    "restart": "npx pm2 reload nav-server"
   },
   "dependencies": {
     "@types/cors": "^2.8.12",
