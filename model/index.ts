@@ -83,10 +83,6 @@ export const Notification = sequelize.define("notification", {
   body: {
     type: SQ.DataTypes.STRING(200),
     allowNull: false,
-  },
-  token:{
-    type: SQ.DataTypes.TEXT,
-    allowNull: false,
   }
 });
 

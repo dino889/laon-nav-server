@@ -28,9 +28,8 @@ export async function sendFCMtoTopic(userid:string,data:{[key:string]:string}){
         console.log('메세지 전송 성공 : ' ,response);
         Notification.create({
             userId:userid,
-            ...data,
-            token:userToken
-        })
+            ...data
+        }).catch(console.log)
     }).catch((e:any)=>{
         console.log('메세지 전송 에러 : ',e)
     })
