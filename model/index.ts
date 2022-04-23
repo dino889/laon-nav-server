@@ -15,7 +15,7 @@ export const sequelize = new SQ.Sequelize(process.env.DB_NAME!, process.env.DB_U
     idle: 1000,
   },
   port: Number(process.env.DB_PORT),
-  logging: true,
+  logging: false,
 });
 
 export async function dbinit() {
