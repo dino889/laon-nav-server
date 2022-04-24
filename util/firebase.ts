@@ -12,7 +12,7 @@ const app = initializeApp({
 });
 const messaging = getMessaging(app);
 
-export async function sendFCMtoTopic(userid:string,data:{[key:string]:string}){
+export async function sendFCMtoTopic(userid:string,topic:string,data:{[key:string]:string}){
     const target:any = await User.findByPk(Number(userid));
     const userToken = target.dataValues.token;
     const message = {
@@ -21,8 +21,8 @@ export async function sendFCMtoTopic(userid:string,data:{[key:string]:string}){
             body:data.body
         },
         data,
-        // topic,
-        token:userToken
+        // token:userToken,
+        topic
     };
     messaging.send(message).then((response:string)=>{
         console.log('메세지 전송 성공 : ' ,response);

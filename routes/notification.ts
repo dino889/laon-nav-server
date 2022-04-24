@@ -23,10 +23,10 @@ notificationRouter.get("/:userId", async (req, res, next) => {
 });
 
 notificationRouter.post('/:userId',(req,res)=>{
-  sendFCMtoTopic(req.params.userId,{
+  sendFCMtoTopic(req.params.userId,req.body.topic as string,{
     title:'라온 네비게이터',
     body:req.body.body,
-    type:req.body.type
+    type:req.body.topic
   })
   res.send('done!')
 })
