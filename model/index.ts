@@ -7,8 +7,8 @@ dotenv.config();
 // 🚀 DB 연결
 export const sequelize = new SQ.Sequelize(process.env.DB_NAME!, process.env.DB_USER!, process.env.DB_PASSWORD!, {
   host: process.env.DB_HOST,
-  dialect: "mysql",
-  password:process.env.DB_PASSWORD,
+  dialect: "mariadb",
+  password: process.env.DB_PASSWORD,
   pool: {
     max: 10,
     min: 0,
@@ -21,7 +21,7 @@ export const sequelize = new SQ.Sequelize(process.env.DB_NAME!, process.env.DB_U
 export async function dbinit() {
   try {
     console.log("Connection has been established successfully.");
-      // await sequelize.sync({ alter: true }); //sync할때 키세요
+    // await sequelize.sync({ alter: true }); //sync할때 키세요
   } catch (error) {
     console.error("Unable to connect to the database:", error);
   }
@@ -59,10 +59,10 @@ export const User = sequelize.define("user", {
     type: SQ.DataTypes.STRING(255),
     allowNull: true,
   },
-  token:{
-    type:SQ.DataTypes.TEXT,
-    allowNull:true,
-  }
+  token: {
+    type: SQ.DataTypes.TEXT,
+    allowNull: true,
+  },
 });
 
 export const Notification = sequelize.define("notification", {
@@ -83,7 +83,7 @@ export const Notification = sequelize.define("notification", {
   body: {
     type: SQ.DataTypes.STRING(200),
     allowNull: false,
-  }
+  },
 });
 
 export const Area = sequelize.define("area", {
