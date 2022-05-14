@@ -21,7 +21,7 @@ export const sequelize = new SQ.Sequelize(process.env.DB_NAME!, process.env.DB_U
 export async function dbinit() {
   try {
     console.log("Connection has been established successfully.");
-    // await sequelize.sync({ alter: true }); //sync할때 키세요
+    await sequelize.sync({ alter: true }); //sync할때 키세요
   } catch (error) {
     console.error("Unable to connect to the database:", error);
   }
