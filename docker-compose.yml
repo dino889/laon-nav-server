@@ -1,7 +1,7 @@
 version: "3"
 services:
   node:
-    build: .
+    image: rhdxoals/laon-nav-server
     ports:
       - "7878:7878"
     volumes:
@@ -15,7 +15,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ./mysql:/var/lib/mysql
+      - ../mysql:/var/lib/mysql
     env_file: .env
     networks:
       - backend

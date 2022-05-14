@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "pm2 start app.ts --name=nav-server --watch"
+    "start": "pm2-runtime start app.ts --name=nav-server --watch"
   },
   "dependencies": {
     "@types/cors": "^2.8.12",

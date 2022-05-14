@@ -56,5 +56,5 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
 });
 
 app.listen(process.env.PORT,()=>{
-  console.log(`서버가 ${process.env.PORT}포트로 실행되었습니다. (${new Date()})`)
+  console.log(`서버가 ${process.env.PORT}포트로 실행되었습니다!2 (${new Date()})`)
 })
