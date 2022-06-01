@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "pm2-runtime start app.ts --name=nav-server --watch"
+    "start": "npx pm2-runtime start app.ts --name=nav-server --watch",
+    "dev": "npx nodemon app.ts"
   },
   "dependencies": {
     "@types/cors": "^2.8.12",

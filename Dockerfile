@@ -2,15 +2,13 @@ FROM node:16
 
 WORKDIR app
 
-COPY package*.json .
+COPY . .
 
 RUN ["npm","install"]
 
-RUN ["npm","install","-g","pm2"]
+RUN ["npm","install","pm2"]
 
-RUN ["pm2", "install", "typescript"]
-
-COPY . .
+RUN ["npx","pm2", "install", "typescript"]
 
 CMD ["npm","start"]
 

@@ -10,7 +10,7 @@ dotenv.config();
 
 // 🚀 router
 import indexRouter from "./routes/index";
-import { dbinit } from "./model";
+import {Area, dbinit} from "./model";
 import userRouter from "./routes/user";
 import notificationRouter from "./routes/notification";
 import areaRouter from "./routes/area";
@@ -58,3 +58,9 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
 app.listen(process.env.PORT,()=>{
   console.log(`서버가 ${process.env.PORT}포트로 실행되었습니다!2 (${new Date()})`)
 })
+
+setInterval(async ()=>{
+  const result = await Area.findAll();
+  console.log('3시간 주기 쿼리 동작');
+  console.log(result)
+},10800000)
