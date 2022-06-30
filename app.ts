@@ -5,17 +5,18 @@ import cookieParser from "cookie-parser";
 import logger from "morgan";
 import cors from "cors";
 import "express-async-errors";
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 dotenv.config();
 
 // 🚀 router
 import indexRouter from "./routes/index";
-import {Area, dbinit} from "./model";
+import { Area, dbinit } from "./model";
 import userRouter from "./routes/user";
 import notificationRouter from "./routes/notification";
 import areaRouter from "./routes/area";
 import placeRouter from "./routes/place";
 import placeListRouter from "./routes/placeList";
+import { areaDataInsert, placeDataInsert } from "./util/jsonManager";
 
 // sequelize
 dbinit();
@@ -33,34 +34,45 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
 app.use("/users", userRouter);
-app.use("/notification", notificationRouter);
+// app.use("/notification", notificationRouter);
 app.use("/areas", areaRouter);
 app.use("/places", placeRouter);
 app.use("/place_list", placeListRouter);
 
 // catch 404 and forward to error handler
-app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
-  next(createError(404));
-});
+app.use(
+  (req: express.Request, res: express.Response, next: express.NextFunction) => {
+    next(createError(404));
+  }
+);
 
 // error handler
-app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
-  // set locals, only providing error in development
-  console.log(err);
-  res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {};
+app.use(
+  (
+    err: any,
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) => {
+    // set locals, only providing error in development
+    console.log(err);
+    res.locals.message = err.message;
+    res.locals.error = req.app.get("env") === "development" ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.send(err);
+    // render the error page
+    res.status(err.status || 500);
+    res.send(err);
+  }
+);
+
+app.listen(process.env.PORT, () => {
+  console.log(
+    `서버가 ${process.env.PORT}포트로 실행되었습니다!2 (${new Date()})`
+  );
 });
 
-app.listen(process.env.PORT,()=>{
-  console.log(`서버가 ${process.env.PORT}포트로 실행되었습니다!2 (${new Date()})`)
-})
-
-setInterval(async ()=>{
+setInterval(async () => {
   const result = await Area.findAll();
-  console.log('3시간 주기 쿼리 동작');
-  console.log(result)
-},10800000)
+  console.log("3시간 주기 쿼리 동작");
+  console.log(result);
+}, 10800000);
